@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indotube</title>
+    <style>
+        /* Reset & Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #0f0f0f; /* Hitam ala YouTube */
+            color: #ffffff;
+            font-family: Roboto, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background-color: #1e1e1e;
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .logo span {
+            color: #ff0000; /* Aksen Merah */
+        }
+
+        /* Container Utama */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+            width: 100%;
+        }
+
+        /* Grid Video */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        /* Kartu Video */
+        .video-card {
+            background-color: transparent;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .video-card:hover {
+            transform: scale(1.02);
+        }
+
+        .thumbnail-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* Rasio 16:9 */
+            background-color: #333;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .thumbnail-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-info {
+            padding: 0 5px;
+        }
+
+        .video-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            line-height: 1.4;
+            max-height: 2.8em;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .video-meta {
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        /* Navigasi Halaman (Pagination) */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px 0;
+        }
+
+        .page-btn {
+            background-color: #222;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .page-btn:hover {
+            background-color: #444;
+        }
+
+        .page-btn.active {
+            background-color: #cc0000;
+            border-color: #cc0000;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 12px;
+            border-top: 1px solid #333;
+        }
+
+        /* Responsif Mobile */
+        @media (max-width: 600px) {
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo" onclick="location.reload()">Indo<span>tube</span></a>
+    </header>
+
+    <div class="container">
+        <div id="video-grid" class="video-grid">
+            <!-- Konten Video akan dimasukkan di sini oleh JavaScript -->
+        </div>
+
+        <div id="pagination" class="pagination">
+            <!-- Tombol Halaman akan muncul di sini -->
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Indotube. All rights reserved.
+    </footer>
+
+    <script>
+        // --- KONFIGURASI DIUBAH DI SINI ---
+        const TOTAL_VIDEOS = 30;
+        const ITEMS_PER_PAGE = 10; // Menjadi 10 video per halaman (Total 3 halaman)
+        const TARGET_URL = "https://wa-6285749396969.github.io/recipes/";
+
+        // State Aplikasi
+        let videos = [];
+        let currentPage = 1;
+
+        // Fungsi Helper
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function formatViews(num) {
+            return (num / 1000).toFixed(1) + 'K';
+        }
+
+        // Inisialisasi Data
+        function initVideos() {
+            const titles = [
+                "Resep Rahasia Masakan Nusantara", "Tutorial Coding untuk Pemula", "Vlog Perjalanan ke Bali",
+                "Review Gadget Terbaru 2026", "Tips Sukses Bisnis Online", "Highlights Sepak Bola Tadi Malam",
+                "Musik Pengantar Tidur", "Cara Membuat Website Gratis", "Kucing Lucu Kompilasi",
+                "Berita Terkini Hari Ini", "Gaming Live Stream", "Tutorial Makeup Natural",
+                "DIY Kerajinan Tangan", "Podcast Misteri", "Latihan Fitness di Rumah",
+                "Mobil Sport Tercepat", "Eksperimen Sains Gila", "Jalan-Jalan Kuliner",
+                "Film Pendek Inspiratif", "Belajar Bahasa Inggris", "Investasi Saham Pemula",
+                "Fotografi Smartphone", "Desain Rumah Minimalis", "Komedi Stand Up",
+                "Sejarah Dunia yang Hilang", "Teknologi Masa Depan", "Review Makanan Pedas",
+                "Tutorial Edit Video", "Kehidupan Desa yang Tenang", "Meditasi 10 Menit"
+            ];
+
+            for (let i = 0; i < TOTAL_VIDEOS; i++) {
+                const title = titles[i % titles.length] + " - Episode " + (Math.floor(i / titles.length) + 1);
+                
+                // Menggunakan seed random yang berbeda setiap reload halaman
+                // agar gambar juga terasa "baru" saat di-refresh (jika browser tidak cache agresif)
+                const imgId = getRandomInt(1, 200); 
+                const thumbnail = `https://picsum.photos/seed/${imgId}/640/360`;
+
+                const rawViews = getRandomInt(10000, 100000);
+                const views = formatViews(rawViews);
+
+                videos.push({
+                    id: i,
+                    title: title,
+                    thumbnail: thumbnail,
+                    views: views,
+                    link: TARGET_URL
+                });
+            }
+
+            // Acak urutan video setiap kali dimuat
+            shuffleArray(videos);
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // Render Halaman
+        function renderPage(page) {
+            const grid = document.getElementById('video-grid');
+            grid.innerHTML = '';
+
+            const start = (page - 1) * ITEMS_PER_PAGE;
+            const end = start + ITEMS_PER_PAGE;
+            const pageItems = videos.slice(start, end);
+
+            pageItems.forEach(video => {
+                const card = document.createElement('div');
+                card.className = 'video-card';
+                card.onclick = () => window.location.href = video.link;
+
+                card.innerHTML = `
+                    <div class="thumbnail-container">
+                        <img src="${video.thumbnail}" alt="${video.title}" class="thumbnail-image" loading="lazy">
+                    </div>
+                    <div class="video-info">
+                        <div class="video-title">${video.title}</div>
+                        <div class="video-meta">${video.views} views • Random Time</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            renderPagination();
+        }
+
+        // Render Tombol Paginasi
+        function renderPagination() {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+            
+            const totalPages = Math.ceil(TOTAL_VIDEOS / ITEMS_PER_PAGE);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                btn.innerText = i;
+                btn.onclick = () => {
+                    currentPage = i;
+                    renderPage(currentPage);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                };
+                pagination.appendChild(btn);
+            }
+        }
+
+        window.onload = function() {
+            initVideos();
+            renderPage(currentPage);
+        };
+
+    </script>
+</body>
+</html>
