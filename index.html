@@ -46,7 +46,7 @@
             .page-btn { padding: 6px 10px; font-size: 12px; }
         }
 
-        /* --- POPUP PERINGATAN BROWSER --- */
+        /* --- POPUP PERINGATAN BROWSER (UPDATED) --- */
         .browser-alert-overlay {
             display: none; /* Hidden by default */
             position: fixed;
@@ -54,16 +54,17 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.85); /* Dark Transparent */
+            /* UPDATE: Lebih terang (0.6) agar konten belakang terlihat samar */
+            background-color: rgba(0, 0, 0, 0.6); 
             z-index: 9999;
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(4px); /* Efek blur pada background */
         }
 
         .browser-alert-box {
             background-color: #1f1f1f;
-            border: 1px solid #333;
+            border: 1px solid #444;
             padding: 30px;
             border-radius: 16px;
             max-width: 90%;
@@ -74,7 +75,7 @@
         }
 
         @keyframes popUp {
-            from { transform: scale(0.8); opacity: 0; }
+            from { transform: scale(0.9); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
 
@@ -95,7 +96,7 @@
 
         .btn-copy { background-color: #333; color: #fff; }
         .btn-open { background-color: #cc0000; color: #fff; }
-        .btn-close { margin-top: 10px; background: none; border: none; color: #666; cursor: pointer; text-decoration: underline; }
+        .btn-close { margin-top: 10px; background: none; border: none; color: #888; cursor: pointer; text-decoration: underline; font-size: 12px; }
 
     </style>
 </head>
@@ -119,13 +120,13 @@
             <div class="alert-icon">⚠️</div>
             <div class="alert-title">Ganti Browser Anda</div>
             <div class="alert-desc">
-                Website ini tidak berjalan optimal di browser aplikasi ini. <br><br>
-                Silakan pindah ke <b>Chrome</b> atau <b>Safari</b> untuk pengalaman menonton yang lancar.
+                Tampilan tidak optimal di aplikasi ini. <br>
+                Mohon pindah ke <b>Chrome</b> atau <b>Safari</b>.
             </div>
             <div class="alert-btn-group">
-                <button class="btn-action btn-copy" onclick="copyCurrentUrl()">📋 Salin Link Web</button>
+                <button class="btn-action btn-copy" onclick="copyCurrentUrl()">📋 Salin Link</button>
                 <button class="btn-action btn-open" onclick="tryOpenExternal()">🌐 Buka di Chrome/Safari</button>
-                <button class="btn-close" onclick="closePopup()">Tutup, saya mengerti</button>
+                <button class="btn-close" onclick="closePopup()">Tutup (Muncul lagi dlm 3s)</button>
             </div>
         </div>
     </div>
@@ -228,7 +229,7 @@
         function changePage(page) { currentPage = page; renderPage(page); }
 
 
-        // --- LOGIKA DETEKSI BROWSER ---
+        // --- LOGIKA DETEKSI BROWSER (POPUP BERULANG) ---
 
         function isInAppBrowser() {
             const ua = navigator.userAgent || navigator.vendor || window.opera;
@@ -239,44 +240,50 @@
                    (ua.indexOf("Twitter") > -1);
         }
 
+        function showPopup() {
+            const popup = document.getElementById('browserAlert');
+            if(popup) popup.style.display = 'flex';
+        }
+
         function triggerBrowserCheck() {
             if (isInAppBrowser()) {
-                console.log("In-App Browser detected. Scheduling popup...");
-                setTimeout(() => {
-                    document.getElementById('browserAlert').style.display = 'flex';
-                }, 5000); // 5000 ms = 5 detik
+                console.log("In-App Browser detected. Popup dalam 5 detik...");
+                // Muncul pertama kali setelah 5 detik
+                setTimeout(showPopup, 5000); 
             }
         }
 
         // Fungsi Tombol Popup
         function closePopup() {
             document.getElementById('browserAlert').style.display = 'none';
+            
+            // UPDATE: Muncul lagi setelah 3 detik (Persistent/Nagging)
+            setTimeout(() => {
+                showPopup();
+            }, 3000); 
         }
 
         function copyCurrentUrl() {
             const url = window.location.href;
             navigator.clipboard.writeText(url).then(() => {
-                alert("Link berhasil disalin! Silakan paste di Chrome/Safari.");
+                alert("Link disalin!");
             }).catch(err => {
-                console.error('Gagal menyalin: ', err);
-                alert("Gagal menyalin link manual.");
+                // Fallback manual jika API clipboard gagal di in-app browser tertentu
+                const input = document.createElement('input');
+                input.value = url;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+                alert("Link disalin!");
             });
         }
 
         function tryOpenExternal() {
-            // Mencoba membuka via intent (Android) atau window.open
             const url = window.location.href;
-            
-            // Coba metode Intent untuk Android Chrome
             const intentUrl = "intent://" + url.replace(/^https?:\/\//, '') + "#Intent;scheme=https;package=com.android.chrome;end";
-            
-            // Coba buka
             window.location.href = intentUrl;
-
-            // Fallback sederhana jika intent gagal (misal di iPhone)
-            setTimeout(() => {
-                window.open(url, '_system');
-            }, 500);
+            setTimeout(() => { window.open(url, '_system'); }, 500);
         }
 
         // --- INITIALIZE ---
