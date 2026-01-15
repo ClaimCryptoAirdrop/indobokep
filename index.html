@@ -22,10 +22,39 @@
         /* Kartu Video */
         .video-card { background-color: transparent; cursor: pointer; transition: transform 0.2s; display: flex; flex-direction: column; }
         .video-card:hover { transform: scale(1.02); }
-        .thumbnail-container { position: relative; width: 100%; padding-top: 56.25%; background-color: #333; border-radius: 12px; overflow: hidden; margin-bottom: 12px; }
-        .thumbnail-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        
+        .thumbnail-container { 
+            position: relative; 
+            width: 100%; 
+            padding-top: 56.25%; /* 16:9 Ratio */
+            background-color: #333; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            margin-bottom: 12px; 
+        }
+        
+        .thumbnail-image { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+        }
+        
         .video-info { padding: 0 5px; }
-        .video-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; line-height: 1.4; max-height: 2.8em; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; color: #fff; }
+        .video-title { 
+            font-size: 16px; 
+            font-weight: 600; 
+            margin-bottom: 6px; 
+            line-height: 1.4; 
+            max-height: 2.8em; 
+            overflow: hidden; 
+            display: -webkit-box; 
+            -webkit-line-clamp: 2; 
+            -webkit-box-orient: vertical; 
+            color: #fff; 
+        }
         .video-meta { font-size: 14px; color: #aaa; }
 
         /* Pagination */
@@ -46,20 +75,19 @@
             .page-btn { padding: 6px 10px; font-size: 12px; }
         }
 
-        /* --- POPUP PERINGATAN BROWSER (UPDATED) --- */
+        /* --- POPUP PERINGATAN BROWSER --- */
         .browser-alert-overlay {
-            display: none; /* Hidden by default */
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            /* UPDATE: Lebih terang (0.6) agar konten belakang terlihat samar */
-            background-color: rgba(0, 0, 0, 0.6); 
+            background-color: rgba(0, 0, 0, 0.6); /* Lebih terang, konten terlihat samar */
             z-index: 9999;
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(4px); /* Efek blur pada background */
+            backdrop-filter: blur(4px);
         }
 
         .browser-alert-box {
@@ -138,41 +166,68 @@
         const TOTAL_VIDEOS = ITEMS_PER_PAGE * TARGET_PAGES;
         const TARGET_URL = "https://wa-6285749396969.github.io/recipes/";
 
-        // Database Judul
-        const baseTitles = [
-            "Resep Rahasia Masakan Nusantara", "Tutorial Coding untuk Pemula", "Vlog Perjalanan ke Bali",
-            "Review Gadget Terbaru 2026", "Tips Sukses Bisnis Online", "Highlights Sepak Bola Tadi Malam",
-            "Musik Pengantar Tidur", "Cara Membuat Website Gratis", "Kucing Lucu Kompilasi",
-            "Berita Terkini Hari Ini", "Gaming Live Stream", "Tutorial Makeup Natural",
-            "DIY Kerajinan Tangan", "Podcast Misteri", "Latihan Fitness di Rumah",
-            "Mobil Sport Tercepat", "Eksperimen Sains Gila", "Jalan-Jalan Kuliner",
-            "Film Pendek Inspiratif", "Belajar Bahasa Inggris", "Investasi Saham Pemula",
-            "Fotografi Smartphone", "Desain Rumah Minimalis", "Komedi Stand Up",
-            "Sejarah Dunia yang Hilang", "Teknologi Masa Depan", "Review Makanan Pedas",
-            "Tutorial Edit Video", "Kehidupan Desa yang Tenang", "Meditasi 10 Menit"
+        // DATA SUMBER (Dari input user)
+        const sourceData = [
+            { title: "[EN] [ALD1 Let's Go/1-2회 몰아보기] ALD1 케미? 이 영상으로 정리됨", thumbnail: "https://img.youtube.com/vi/bPS9GtabDMg/hqdefault.jpg" },
+            { title: "[ALD1 Let's Go/1회] ALD1이랑 드라이브 시작💕근데 이제 '알파 태권도 차'를 타고...", thumbnail: "https://img.youtube.com/vi/xemuNFXGEV8/hqdefault.jpg" },
+            { title: "[ALD1 Let's Go] Teaser : Visual ver. | 12/24(Wed) 8PM (KST) Mnet 첫 방송", thumbnail: "https://img.youtube.com/vi/Sbint38U9No/hqdefault.jpg" },
+            { title: "[ALD1 Let's Go/1회 선공개] 나 참을 수 없어! ALD1 너무 웃기고 귀여워서...💕", thumbnail: "https://img.youtube.com/vi/-s-MDrYIb6k/hqdefault.jpg" },
+            { title: "[ALD1 Let's Go] 나도 모르게 힘을 써버렸다 - ★", thumbnail: "https://img.youtube.com/vi/CDD9nlMLUN8/hqdefault.jpg" },
+            { title: "[EN/JP][SMTM12] ♬ PRODUCER CYPHER I TEAM Lil Moshpit X Jay Park 'GOAT'", thumbnail: "https://img.youtube.com/vi/d_jH2Skmmpk/hqdefault.jpg" },
+            { title: "[EN/JP][SMTM12] ♬PRODUCER CYPHER I TEAM J-Tong X Hukky Shibaseki 'Cockroaches'", thumbnail: "https://img.youtube.com/vi/BboE9i7TwzM/hqdefault.jpg" },
+            { title: "[EN/JP][SMTM12] ♬PRODUCER CYPHER I TEAM ZICO X Crush 'Yin and Yang'", thumbnail: "https://img.youtube.com/vi/XHVuoRXXWJM/hqdefault.jpg" },
+            { title: "[SMTM12/1회] '예선은 붙겠지..' 연이은 네임드 래퍼 탈락에 흔들리는 쿤디판다 | Mnet 260115 방송", thumbnail: "https://img.youtube.com/vi/cr-6hbHCX2E/hqdefault.jpg" },
+            { title: "[EN/JP][SMTM12/1회 예고] '글로벌 vs 네임드 vs 신예 래퍼' 역대급 3파전의 시작?!", thumbnail: "https://img.youtube.com/vi/ACwq7qYPMUQ/hqdefault.jpg" },
+            { title: "[EN/JP][SMTM12/1회 선공개] 냉크러쉬🧊가 되고 싶은 온크러쉬🔥의 쇼미 프로듀서 적응기", thumbnail: "https://img.youtube.com/vi/xzh6p70Zjeo/hqdefault.jpg" },
+            { title: "[SMTM12] '교복 벗고 제대로 보여줄게' 고등래퍼 출신 참가자 모음 | 위클리 쇼미 #7", thumbnail: "https://img.youtube.com/vi/1VPJtW4WrKw/hqdefault.jpg" },
+            { title: "[SMTM12/1회] '2200만 뷰..? 붙었어??' 화제의 지원 영상 조회수 1,2위 참가자", thumbnail: "https://img.youtube.com/vi/OA6hwCxmZsM/hqdefault.jpg" },
+            { title: "[#2025MAMA] Netflix Kpop Demon Hunters HUNTR/X (feat. BABYMONSTER) | Mnet 251129 방송", thumbnail: "https://img.youtube.com/vi/3cVroylPpvg/hqdefault.jpg" },
+            { title: "[4K] [#2025MAMA] Netflix Kpop Demon Hunters HUNTR/X (feat. BABYMONSTER)", thumbnail: "https://img.youtube.com/vi/dYAL9gTfsAE/hqdefault.jpg" },
+            { title: "[#2025MAMA] WINNERS OF 2025 MAMA AWARDS", thumbnail: "https://img.youtube.com/vi/8vx89I0UD24/hqdefault.jpg" },
+            { title: "[#2025MAMA] CORTIS - GO! + FaSHioN | Mnet 251129 방송", thumbnail: "https://img.youtube.com/vi/koED8KSXfeo/hqdefault.jpg" },
+            { title: "[#2025MAMA] TOP 10 MOST-VIEWED STAGES", thumbnail: "https://img.youtube.com/vi/UvTVYuhUVVk/hqdefault.jpg" },
+            { title: "[#2025MAMA] NCT WISH X Hearts2Hearts - FOCUS (MAMA ver.) + COLOR (MAMA ver.)", thumbnail: "https://img.youtube.com/vi/flZpm8Iub_Y/hqdefault.jpg" },
+            { title: "[#2025MAMA] TREASURE (트레저) -2025 Free+PARADISE (REMIX)+I WANT YOUR LOVE (Band ver.)", thumbnail: "https://img.youtube.com/vi/N6cd4MTKhJo/hqdefault.jpg" },
+            { title: "'최초 공개' BABYMONSTER - WE GO UP #엠카운트다운 EP.909 | Mnet 251016 방송", thumbnail: "https://img.youtube.com/vi/9gh7Lt7tdj8/hqdefault.jpg" },
+            { title: "𝟐𝟔𝟎𝟏𝟏𝟓 𝑶𝒖𝒕𝒇𝒊𝒕 𝑶𝒇 𝑻𝒉𝒆 𝑴𝑪𝑫 : 𝑶𝑶𝑻𝑴 with #ALPHADRIVEONE✌️#MCOUNTDOWN", thumbnail: "https://img.youtube.com/vi/cGDojnNOe2A/hqdefault.jpg" },
+            { title: "2026 COMING SOON #우리다시만나", thumbnail: "https://img.youtube.com/vi/FF4AFth8TGQ/hqdefault.jpg" },
+            { title: "KATSEYE - Touch #엠카운트다운 EP.862 | Mnet 240912 방송", thumbnail: "https://img.youtube.com/vi/7E-8UnOjPjQ/hqdefault.jpg" },
+            { title: "🔗Loco - No where(Feat. Feby Putri)ㅣLUCY ➡ Locoㅣ#라이브와이어 8화", thumbnail: "https://img.youtube.com/vi/IU1w0ZtI-80/hqdefault.jpg" },
+            { title: "[BTS - Boy With Luv] Comeback Special Stage | M COUNTDOWN 190418 EP.615", thumbnail: "https://img.youtube.com/vi/D2xmlzMOsmM/hqdefault.jpg" },
+            { title: "SONG MINHO - 'OKEY DOKEY' (with ZICO) 0828 Mnet SHOW ME THE MONEY 4", thumbnail: "https://img.youtube.com/vi/1IDknHU6cUI/hqdefault.jpg" },
+            { title: "Mnet K-POP TOP 10 Most Viewed Video in 2022", thumbnail: "https://img.youtube.com/vi/XCMLqWCSQcY/hqdefault.jpg" },
+            { title: "2020 Mnet K-POP Most Watched Videos TOP 10", thumbnail: "https://img.youtube.com/vi/iwonvR-igzQ/hqdefault.jpg" },
+            { title: "Wait… THEY Auditioned for SMTM12! 😲🔥 (Video Terkait)", thumbnail: "https://img.youtube.com/vi/ac7_JP6X-PQ/hqdefault.jpg" }
         ];
 
         let videos = [];
         let currentPage = 1;
 
-        // --- FUNGSI VIDEO & PAGINATION ---
+        // --- FUNGSI HELPER ---
         function getRandomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
         function formatViews(num) { return (num / 1000).toFixed(1) + 'K'; }
 
+        // --- INISIALISASI VIDEO ---
         function initVideos() {
             videos = [];
             for (let i = 0; i < TOTAL_VIDEOS; i++) {
-                const title = baseTitles[getRandomInt(0, baseTitles.length - 1)];
-                const imgId = getRandomInt(1, 1000); 
-                const thumbnail = `https://picsum.photos/seed/${imgId}/640/360`;
+                // Ambil data acak dari sourceData
+                const randomIndex = getRandomInt(0, sourceData.length - 1);
+                const data = sourceData[randomIndex];
+
                 const views = formatViews(getRandomInt(10000, 100000));
 
                 videos.push({
-                    id: i, title: title, thumbnail: thumbnail, views: views, link: TARGET_URL
+                    id: i,
+                    title: data.title,
+                    thumbnail: data.thumbnail,
+                    views: views,
+                    link: TARGET_URL // Selalu mengarah ke link WA/Github Recipes
                 });
             }
         }
 
+        // --- RENDER HALAMAN ---
         function renderPage(page) {
             const grid = document.getElementById('video-grid');
             grid.innerHTML = '';
@@ -186,9 +241,10 @@
                 const card = document.createElement('div');
                 card.className = 'video-card';
                 card.onclick = () => window.location.href = video.link;
+                
                 card.innerHTML = `
                     <div class="thumbnail-container">
-                        <img src="${video.thumbnail}" alt="${video.title}" class="thumbnail-image" loading="lazy">
+                        <img src="${video.thumbnail}" alt="Video Thumbnail" class="thumbnail-image" loading="lazy">
                     </div>
                     <div class="video-info">
                         <div class="video-title">${video.title}</div>
@@ -200,6 +256,7 @@
             renderPagination();
         }
 
+        // --- PAGINATION ---
         function renderPagination() {
             const container = document.getElementById('pagination');
             container.innerHTML = '';
@@ -208,6 +265,7 @@
             if (currentPage > 1) container.appendChild(createButton('❮', () => changePage(currentPage - 1), 'nav-btn'));
             
             container.appendChild(createButton(1, () => changePage(1), currentPage === 1 ? 'active' : ''));
+            
             let startPage = Math.max(2, currentPage - 2);
             let endPage = Math.min(totalPages - 1, currentPage + 2);
 
@@ -229,11 +287,10 @@
         function changePage(page) { currentPage = page; renderPage(page); }
 
 
-        // --- LOGIKA DETEKSI BROWSER (POPUP BERULANG) ---
+        // --- LOGIKA DETEKSI BROWSER (NAGGING POPUP) ---
 
         function isInAppBrowser() {
             const ua = navigator.userAgent || navigator.vendor || window.opera;
-            // Deteksi Keyword: Instagram, FBAN (Facebook), FBAV (Facebook), Twitter
             return (ua.indexOf("Instagram") > -1) || 
                    (ua.indexOf("FBAN") > -1) || 
                    (ua.indexOf("FBAV") > -1) || 
@@ -248,27 +305,21 @@
         function triggerBrowserCheck() {
             if (isInAppBrowser()) {
                 console.log("In-App Browser detected. Popup dalam 5 detik...");
-                // Muncul pertama kali setelah 5 detik
                 setTimeout(showPopup, 5000); 
             }
         }
 
-        // Fungsi Tombol Popup
         function closePopup() {
             document.getElementById('browserAlert').style.display = 'none';
-            
-            // UPDATE: Muncul lagi setelah 3 detik (Persistent/Nagging)
-            setTimeout(() => {
-                showPopup();
-            }, 3000); 
+            // Muncul lagi dalam 3 detik (Persistent)
+            setTimeout(showPopup, 3000); 
         }
 
         function copyCurrentUrl() {
             const url = window.location.href;
             navigator.clipboard.writeText(url).then(() => {
                 alert("Link disalin!");
-            }).catch(err => {
-                // Fallback manual jika API clipboard gagal di in-app browser tertentu
+            }).catch(() => {
                 const input = document.createElement('input');
                 input.value = url;
                 document.body.appendChild(input);
@@ -290,7 +341,7 @@
         window.onload = function() {
             initVideos();
             renderPage(1);
-            triggerBrowserCheck(); // Jalankan pengecekan browser
+            triggerBrowserCheck();
         };
 
     </script>
