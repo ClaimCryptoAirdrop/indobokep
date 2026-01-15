@@ -83,7 +83,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6); /* Lebih terang, konten terlihat samar */
+            background-color: rgba(0, 0, 0, 0.6); /* Transparan gelap */
             z-index: 9999;
             justify-content: center;
             align-items: center;
@@ -163,10 +163,10 @@
         // --- KONFIGURASI VIDEO ---
         const ITEMS_PER_PAGE = 9;
         const TARGET_PAGES = 100;
-        const TOTAL_VIDEOS = ITEMS_PER_PAGE * TARGET_PAGES;
+        // Total tidak lagi dihitung sembarangan, kita generate per halaman
         const TARGET_URL = "https://wa-6285749396969.github.io/recipes/";
 
-        // DATA SUMBER (Dari input user)
+        // DATA SUMBER (30 Item Unik)
         const sourceData = [
             { title: "[EN] [ALD1 Let's Go/1-2회 몰아보기] ALD1 케미? 이 영상으로 정리됨", thumbnail: "https://img.youtube.com/vi/bPS9GtabDMg/hqdefault.jpg" },
             { title: "[ALD1 Let's Go/1회] ALD1이랑 드라이브 시작💕근데 이제 '알파 태권도 차'를 타고...", thumbnail: "https://img.youtube.com/vi/xemuNFXGEV8/hqdefault.jpg" },
@@ -207,22 +207,37 @@
         function getRandomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
         function formatViews(num) { return (num / 1000).toFixed(1) + 'K'; }
 
-        // --- INISIALISASI VIDEO ---
+        // --- INISIALISASI VIDEO (LOGIKA ANTI-DUPLIKAT PER HALAMAN) ---
         function initVideos() {
             videos = [];
-            for (let i = 0; i < TOTAL_VIDEOS; i++) {
-                // Ambil data acak dari sourceData
-                const randomIndex = getRandomInt(0, sourceData.length - 1);
-                const data = sourceData[randomIndex];
+            
+            // Loop sebanyak jumlah halaman (100 Halaman)
+            for (let p = 0; p < TARGET_PAGES; p++) {
+                
+                // 1. Buat salinan index dari 0 sampai 29 (jumlah data source)
+                // Kita bekerja dengan index agar lebih cepat
+                let availableIndices = Array.from({length: sourceData.length}, (_, i) => i);
+                
+                // 2. Acak (Shuffle) array index tersebut menggunakan Fisher-Yates
+                for (let i = availableIndices.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [availableIndices[i], availableIndices[j]] = [availableIndices[j], availableIndices[i]];
+                }
 
-                const views = formatViews(getRandomInt(10000, 100000));
+                // 3. Ambil 9 index pertama yang sudah diacak
+                // Karena kita mengambil dari array yang di-shuffle tanpa pengembalian (splice/slice),
+                // DIJAMIN tidak ada angka kembar dalam 9 item ini.
+                const selectedIndices = availableIndices.slice(0, ITEMS_PER_PAGE);
 
-                videos.push({
-                    id: i,
-                    title: data.title,
-                    thumbnail: data.thumbnail,
-                    views: views,
-                    link: TARGET_URL // Selalu mengarah ke link WA/Github Recipes
+                // 4. Masukkan ke array utama
+                selectedIndices.forEach(idx => {
+                    const data = sourceData[idx];
+                    videos.push({
+                        title: data.title,
+                        thumbnail: data.thumbnail,
+                        views: formatViews(getRandomInt(10000, 100000)),
+                        link: TARGET_URL
+                    });
                 });
             }
         }
@@ -256,7 +271,7 @@
             renderPagination();
         }
 
-        // --- PAGINATION ---
+        // --- PAGINATION (NAVIGASI) ---
         function renderPagination() {
             const container = document.getElementById('pagination');
             container.innerHTML = '';
@@ -288,7 +303,6 @@
 
 
         // --- LOGIKA DETEKSI BROWSER (NAGGING POPUP) ---
-
         function isInAppBrowser() {
             const ua = navigator.userAgent || navigator.vendor || window.opera;
             return (ua.indexOf("Instagram") > -1) || 
@@ -311,7 +325,6 @@
 
         function closePopup() {
             document.getElementById('browserAlert').style.display = 'none';
-            // Muncul lagi dalam 3 detik (Persistent)
             setTimeout(showPopup, 3000); 
         }
 
