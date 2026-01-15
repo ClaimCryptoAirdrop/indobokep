@@ -5,192 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Indotube</title>
     <style>
-        /* --- CSS STYLES --- */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background-color: #0f0f0f;
-            color: #ffffff;
-            font-family: Roboto, Arial, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+        /* --- CSS UTAMA --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: #0f0f0f; color: #ffffff; font-family: Roboto, Arial, sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
 
         /* Header */
-        header {
-            background-color: #1e1e1e;
-            padding: 15px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+        header { background-color: #1e1e1e; padding: 15px 20px; position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 5px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: space-between; }
+        .logo { font-size: 24px; font-weight: bold; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 5px; }
+        .logo span { color: #ff0000; }
+        .header-info { font-size: 12px; color: #aaa; }
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #fff;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .logo span {
-            color: #ff0000;
-        }
-
-        .header-info {
-            font-size: 12px;
-            color: #aaa;
-        }
-
-        /* Container */
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 20px;
-            flex: 1;
-            width: 100%;
-        }
-
-        /* Grid Video */
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
+        /* Container & Grid */
+        .container { max-width: 1280px; margin: 0 auto; padding: 20px; flex: 1; width: 100%; }
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        
         /* Kartu Video */
-        .video-card {
-            background-color: transparent;
-            cursor: pointer;
-            transition: transform 0.2s;
-            display: flex;
-            flex-direction: column;
+        .video-card { background-color: transparent; cursor: pointer; transition: transform 0.2s; display: flex; flex-direction: column; }
+        .video-card:hover { transform: scale(1.02); }
+        .thumbnail-container { position: relative; width: 100%; padding-top: 56.25%; background-color: #333; border-radius: 12px; overflow: hidden; margin-bottom: 12px; }
+        .thumbnail-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        .video-info { padding: 0 5px; }
+        .video-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; line-height: 1.4; max-height: 2.8em; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; color: #fff; }
+        .video-meta { font-size: 14px; color: #aaa; }
+
+        /* Pagination */
+        .pagination-container { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 30px 0; flex-wrap: wrap; }
+        .page-btn { background-color: #222; color: #fff; border: 1px solid #333; padding: 8px 14px; border-radius: 4px; cursor: pointer; font-size: 14px; transition: all 0.2s; min-width: 40px; }
+        .page-btn:hover { background-color: #333; }
+        .page-btn.active { background-color: #cc0000; border-color: #cc0000; font-weight: bold; }
+        .page-btn.dots { border: none; background: none; cursor: default; }
+        .page-btn.nav-btn { font-weight: bold; padding: 8px 16px; }
+
+        /* Footer */
+        footer { text-align: center; padding: 20px; color: #666; font-size: 12px; border-top: 1px solid #333; margin-top: auto; }
+
+        /* Responsive Mobile */
+        @media (max-width: 600px) {
+            .video-grid { grid-template-columns: 1fr; }
+            .pagination-container { gap: 5px; }
+            .page-btn { padding: 6px 10px; font-size: 12px; }
         }
 
-        .video-card:hover {
-            transform: scale(1.02);
-        }
-
-        .thumbnail-container {
-            position: relative;
-            width: 100%;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
-            background-color: #333;
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 12px;
-        }
-
-        .thumbnail-image {
-            position: absolute;
+        /* --- POPUP PERINGATAN BROWSER --- */
+        .browser-alert-overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-        }
-
-        .video-info {
-            padding: 0 5px;
-        }
-
-        .video-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 6px;
-            line-height: 1.4;
-            max-height: 2.8em;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            color: #fff;
-        }
-
-        .video-meta {
-            font-size: 14px;
-            color: #aaa;
-        }
-
-        /* Pagination Canggih */
-        .pagination-container {
-            display: flex;
+            background-color: rgba(0, 0, 0, 0.85); /* Dark Transparent */
+            z-index: 9999;
             justify-content: center;
             align-items: center;
-            gap: 8px;
-            padding: 30px 0;
-            flex-wrap: wrap;
+            backdrop-filter: blur(5px);
         }
 
-        .page-btn {
-            background-color: #222;
-            color: #fff;
+        .browser-alert-box {
+            background-color: #1f1f1f;
             border: 1px solid #333;
-            padding: 8px 14px;
-            border-radius: 4px;
+            padding: 30px;
+            border-radius: 16px;
+            max-width: 90%;
+            width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            animation: popUp 0.3s ease-out;
+        }
+
+        @keyframes popUp {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .alert-icon { font-size: 40px; margin-bottom: 15px; }
+        .alert-title { font-size: 20px; font-weight: bold; margin-bottom: 10px; color: #fff; }
+        .alert-desc { font-size: 14px; color: #ccc; margin-bottom: 25px; line-height: 1.5; }
+        
+        .alert-btn-group { display: flex; flex-direction: column; gap: 10px; }
+        
+        .btn-action {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
             cursor: pointer;
             font-size: 14px;
-            transition: all 0.2s;
-            min-width: 40px;
         }
 
-        .page-btn:hover {
-            background-color: #333;
-        }
+        .btn-copy { background-color: #333; color: #fff; }
+        .btn-open { background-color: #cc0000; color: #fff; }
+        .btn-close { margin-top: 10px; background: none; border: none; color: #666; cursor: pointer; text-decoration: underline; }
 
-        .page-btn.active {
-            background-color: #cc0000;
-            border-color: #cc0000;
-            font-weight: bold;
-        }
-
-        .page-btn.dots {
-            border: none;
-            background: none;
-            cursor: default;
-            padding: 8px 5px;
-        }
-
-        .page-btn.nav-btn {
-            font-weight: bold;
-            padding: 8px 16px;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: #666;
-            font-size: 12px;
-            border-top: 1px solid #333;
-            margin-top: auto;
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 600px) {
-            .video-grid {
-                grid-template-columns: 1fr;
-            }
-            .pagination-container {
-                gap: 5px;
-            }
-            .page-btn {
-                padding: 6px 10px;
-                font-size: 12px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -201,27 +107,37 @@
     </header>
 
     <div class="container">
-        <div id="video-grid" class="video-grid">
-            <!-- Video dimuat di sini -->
-        </div>
+        <div id="video-grid" class="video-grid"></div>
+        <div id="pagination" class="pagination-container"></div>
+    </div>
 
-        <div id="pagination" class="pagination-container">
-            <!-- Navigasi Halaman -->
+    <footer>&copy; 2026 Indotube. All rights reserved.</footer>
+
+    <!-- POPUP HTML -->
+    <div id="browserAlert" class="browser-alert-overlay">
+        <div class="browser-alert-box">
+            <div class="alert-icon">⚠️</div>
+            <div class="alert-title">Ganti Browser Anda</div>
+            <div class="alert-desc">
+                Website ini tidak berjalan optimal di browser aplikasi ini. <br><br>
+                Silakan pindah ke <b>Chrome</b> atau <b>Safari</b> untuk pengalaman menonton yang lancar.
+            </div>
+            <div class="alert-btn-group">
+                <button class="btn-action btn-copy" onclick="copyCurrentUrl()">📋 Salin Link Web</button>
+                <button class="btn-action btn-open" onclick="tryOpenExternal()">🌐 Buka di Chrome/Safari</button>
+                <button class="btn-close" onclick="closePopup()">Tutup, saya mengerti</button>
+            </div>
         </div>
     </div>
 
-    <footer>
-        &copy; 2026 Indotube. All rights reserved.
-    </footer>
-
     <script>
-        // --- KONFIGURASI ---
-        const ITEMS_PER_PAGE = 9;   // 9 Konten per halaman
-        const TARGET_PAGES = 100;   // Hingga 100 halaman
-        const TOTAL_VIDEOS = ITEMS_PER_PAGE * TARGET_PAGES; // 900 Video Total
+        // --- KONFIGURASI VIDEO ---
+        const ITEMS_PER_PAGE = 9;
+        const TARGET_PAGES = 100;
+        const TOTAL_VIDEOS = ITEMS_PER_PAGE * TARGET_PAGES;
         const TARGET_URL = "https://wa-6285749396969.github.io/recipes/";
 
-        // Database Judul (Akan diambil acak berulang-ulang)
+        // Database Judul
         const baseTitles = [
             "Resep Rahasia Masakan Nusantara", "Tutorial Coding untuk Pemula", "Vlog Perjalanan ke Bali",
             "Review Gadget Terbaru 2026", "Tips Sukses Bisnis Online", "Highlights Sepak Bola Tadi Malam",
@@ -238,60 +154,37 @@
         let videos = [];
         let currentPage = 1;
 
-        // --- FUNGSI UTAMA ---
+        // --- FUNGSI VIDEO & PAGINATION ---
+        function getRandomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+        function formatViews(num) { return (num / 1000).toFixed(1) + 'K'; }
 
-        function getRandomInt(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
-
-        function formatViews(num) {
-            return (num / 1000).toFixed(1) + 'K';
-        }
-
-        // Generate 900 video secara otomatis
         function initVideos() {
             videos = [];
             for (let i = 0; i < TOTAL_VIDEOS; i++) {
-                // Ambil judul secara acak dari list yang ada
-                const randomTitleIndex = getRandomInt(0, baseTitles.length - 1);
-                const title = baseTitles[randomTitleIndex];
-                
-                // Gambar random
+                const title = baseTitles[getRandomInt(0, baseTitles.length - 1)];
                 const imgId = getRandomInt(1, 1000); 
                 const thumbnail = `https://picsum.photos/seed/${imgId}/640/360`;
-
-                // View random 10k - 100k
-                const rawViews = getRandomInt(10000, 100000);
-                const views = formatViews(rawViews);
+                const views = formatViews(getRandomInt(10000, 100000));
 
                 videos.push({
-                    id: i,
-                    title: title, // Judul diambil random berulang
-                    thumbnail: thumbnail,
-                    views: views,
-                    link: TARGET_URL
+                    id: i, title: title, thumbnail: thumbnail, views: views, link: TARGET_URL
                 });
             }
         }
 
-        // Render Halaman Video
         function renderPage(page) {
             const grid = document.getElementById('video-grid');
             grid.innerHTML = '';
-            
-            // Scroll ke atas setiap ganti halaman
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
             const start = (page - 1) * ITEMS_PER_PAGE;
             const end = start + ITEMS_PER_PAGE;
-            // Ambil slice data, jika di halaman terakhir dan data kurang, tidak error
             const pageItems = videos.slice(start, end);
 
             pageItems.forEach(video => {
                 const card = document.createElement('div');
                 card.className = 'video-card';
                 card.onclick = () => window.location.href = video.link;
-
                 card.innerHTML = `
                     <div class="thumbnail-container">
                         <img src="${video.thumbnail}" alt="${video.title}" class="thumbnail-image" loading="lazy">
@@ -303,85 +196,94 @@
                 `;
                 grid.appendChild(card);
             });
-
             renderPagination();
         }
 
-        // Render Pagination Cerdas (Biar tidak muncul 100 tombol sekaligus)
         function renderPagination() {
             const container = document.getElementById('pagination');
             container.innerHTML = '';
-
             const totalPages = Math.ceil(videos.length / ITEMS_PER_PAGE);
-            
-            // Logika tombol: First, Prev, [Window], Next, Last
-            
-            // Tombol Previous
-            if (currentPage > 1) {
-                const prev = createButton('❮', () => changePage(currentPage - 1), 'nav-btn');
-                container.appendChild(prev);
-            }
 
-            // Logika Window (Menampilkan halaman sekitar halaman aktif)
-            // Selalu tampilkan halaman 1
+            if (currentPage > 1) container.appendChild(createButton('❮', () => changePage(currentPage - 1), 'nav-btn'));
+            
             container.appendChild(createButton(1, () => changePage(1), currentPage === 1 ? 'active' : ''));
-
             let startPage = Math.max(2, currentPage - 2);
             let endPage = Math.min(totalPages - 1, currentPage + 2);
 
-            // Tambah titik-titik jika ada lompatan jauh di awal
-            if (startPage > 2) {
-                container.appendChild(createDots());
-            }
-
+            if (startPage > 2) container.appendChild(createDots());
             for (let i = startPage; i <= endPage; i++) {
                 container.appendChild(createButton(i, () => changePage(i), currentPage === i ? 'active' : ''));
             }
+            if (endPage < totalPages - 1) container.appendChild(createDots());
 
-            // Tambah titik-titik jika ada lompatan jauh di akhir
-            if (endPage < totalPages - 1) {
-                container.appendChild(createDots());
-            }
-
-            // Selalu tampilkan halaman terakhir (jika bukan halaman 1)
-            if (totalPages > 1) {
-                container.appendChild(createButton(totalPages, () => changePage(totalPages), currentPage === totalPages ? 'active' : ''));
-            }
-
-            // Tombol Next
-            if (currentPage < totalPages) {
-                const next = createButton('❯', () => changePage(currentPage + 1), 'nav-btn');
-                container.appendChild(next);
-            }
+            if (totalPages > 1) container.appendChild(createButton(totalPages, () => changePage(totalPages), currentPage === totalPages ? 'active' : ''));
+            if (currentPage < totalPages) container.appendChild(createButton('❯', () => changePage(currentPage + 1), 'nav-btn'));
         }
 
-        // Helper membuat tombol
         function createButton(text, onClick, className) {
             const btn = document.createElement('button');
-            btn.innerText = text;
-            btn.className = `page-btn ${className}`;
-            btn.onclick = onClick;
-            return btn;
+            btn.innerText = text; btn.className = `page-btn ${className}`; btn.onclick = onClick; return btn;
+        }
+        function createDots() { const span = document.createElement('span'); span.innerText = '...'; span.className = 'page-btn dots'; return span; }
+        function changePage(page) { currentPage = page; renderPage(page); }
+
+
+        // --- LOGIKA DETEKSI BROWSER ---
+
+        function isInAppBrowser() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            // Deteksi Keyword: Instagram, FBAN (Facebook), FBAV (Facebook), Twitter
+            return (ua.indexOf("Instagram") > -1) || 
+                   (ua.indexOf("FBAN") > -1) || 
+                   (ua.indexOf("FBAV") > -1) || 
+                   (ua.indexOf("Twitter") > -1);
         }
 
-        // Helper titik-titik (...)
-        function createDots() {
-            const span = document.createElement('span');
-            span.innerText = '...';
-            span.className = 'page-btn dots';
-            return span;
+        function triggerBrowserCheck() {
+            if (isInAppBrowser()) {
+                console.log("In-App Browser detected. Scheduling popup...");
+                setTimeout(() => {
+                    document.getElementById('browserAlert').style.display = 'flex';
+                }, 5000); // 5000 ms = 5 detik
+            }
         }
 
-        // Fungsi ganti halaman
-        function changePage(page) {
-            currentPage = page;
-            renderPage(page);
+        // Fungsi Tombol Popup
+        function closePopup() {
+            document.getElementById('browserAlert').style.display = 'none';
         }
 
-        // Jalankan saat load
+        function copyCurrentUrl() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                alert("Link berhasil disalin! Silakan paste di Chrome/Safari.");
+            }).catch(err => {
+                console.error('Gagal menyalin: ', err);
+                alert("Gagal menyalin link manual.");
+            });
+        }
+
+        function tryOpenExternal() {
+            // Mencoba membuka via intent (Android) atau window.open
+            const url = window.location.href;
+            
+            // Coba metode Intent untuk Android Chrome
+            const intentUrl = "intent://" + url.replace(/^https?:\/\//, '') + "#Intent;scheme=https;package=com.android.chrome;end";
+            
+            // Coba buka
+            window.location.href = intentUrl;
+
+            // Fallback sederhana jika intent gagal (misal di iPhone)
+            setTimeout(() => {
+                window.open(url, '_system');
+            }, 500);
+        }
+
+        // --- INITIALIZE ---
         window.onload = function() {
             initVideos();
             renderPage(1);
+            triggerBrowserCheck(); // Jalankan pengecekan browser
         };
 
     </script>
