@@ -40,6 +40,8 @@
             width: 100%; 
             height: 100%; 
             object-fit: cover; 
+            /* Perbaikan CSS untuk Gambar */
+            display: block;
         }
         
         .video-info { padding: 0 5px; }
@@ -170,126 +172,105 @@
 
         // === DATABASE 1: DESKTOP / PC (K-POP & VARIETY) ===
         const dataDesktop = [
-            { title: "[EN] [ALD1 Let's Go/1-2회 몰아보기] ALD1 케미? 이 영상으로 정리됨", thumbnail: "https://img.youtube.com/vi/bPS9GtabDMg/hqdefault.jpg" },
-            { title: "[ALD1 Let's Go/1회] ALD1이랑 드라이브 시작💕근데 이제 '알파 태권도 차'를 타고...", thumbnail: "https://img.youtube.com/vi/xemuNFXGEV8/hqdefault.jpg" },
-            { title: "[ALD1 Let's Go] Teaser : Visual ver. | 12/24(Wed) 8PM (KST) Mnet 첫 방송", thumbnail: "https://img.youtube.com/vi/Sbint38U9No/hqdefault.jpg" },
-            { title: "[ALD1 Let's Go/1회 선공개] 나 참을 수 없어! ALD1 너무 웃기고 귀여워서...💕", thumbnail: "https://img.youtube.com/vi/-s-MDrYIb6k/hqdefault.jpg" },
-            { title: "[ALD1 Let's Go] 나도 모르게 힘을 써버렸다 - ★", thumbnail: "https://img.youtube.com/vi/CDD9nlMLUN8/hqdefault.jpg" },
-            { title: "[EN/JP][SMTM12] ♬ PRODUCER CYPHER I TEAM Lil Moshpit X Jay Park 'GOAT'", thumbnail: "https://img.youtube.com/vi/d_jH2Skmmpk/hqdefault.jpg" },
-            { title: "[EN/JP][SMTM12] ♬PRODUCER CYPHER I TEAM J-Tong X Hukky Shibaseki 'Cockroaches'", thumbnail: "https://img.youtube.com/vi/BboE9i7TwzM/hqdefault.jpg" },
-            { title: "[EN/JP][SMTM12] ♬PRODUCER CYPHER I TEAM ZICO X Crush 'Yin and Yang'", thumbnail: "https://img.youtube.com/vi/XHVuoRXXWJM/hqdefault.jpg" },
-            { title: "[SMTM12/1회] '예선은 붙겠지..' 연이은 네임드 래퍼 탈락에 흔들리는 쿤디판다 | Mnet 260115 방송", thumbnail: "https://img.youtube.com/vi/cr-6hbHCX2E/hqdefault.jpg" },
-            { title: "[EN/JP][SMTM12/1회 예고] '글로벌 vs 네임드 vs 신예 래퍼' 역대급 3파전의 시작?!", thumbnail: "https://img.youtube.com/vi/ACwq7qYPMUQ/hqdefault.jpg" },
-            { title: "[EN/JP][SMTM12/1회 선공개] 냉크러쉬🧊가 되고 싶은 온크러쉬🔥의 쇼미 프로듀서 적응기", thumbnail: "https://img.youtube.com/vi/xzh6p70Zjeo/hqdefault.jpg" },
-            { title: "[SMTM12] '교복 벗고 제대로 보여줄게' 고등래퍼 출신 참가자 모음 | 위클리 쇼미 #7", thumbnail: "https://img.youtube.com/vi/1VPJtW4WrKw/hqdefault.jpg" },
-            { title: "[SMTM12/1회] '2200만 뷰..? 붙었어??' 화제의 지원 영상 조회수 1,2위 참가자", thumbnail: "https://img.youtube.com/vi/OA6hwCxmZsM/hqdefault.jpg" },
-            { title: "[#2025MAMA] Netflix Kpop Demon Hunters HUNTR/X (feat. BABYMONSTER) | Mnet 251129 방송", thumbnail: "https://img.youtube.com/vi/3cVroylPpvg/hqdefault.jpg" },
-            { title: "[4K] [#2025MAMA] Netflix Kpop Demon Hunters HUNTR/X (feat. BABYMONSTER)", thumbnail: "https://img.youtube.com/vi/dYAL9gTfsAE/hqdefault.jpg" },
-            { title: "[#2025MAMA] WINNERS OF 2025 MAMA AWARDS", thumbnail: "https://img.youtube.com/vi/8vx89I0UD24/hqdefault.jpg" },
-            { title: "[#2025MAMA] CORTIS - GO! + FaSHioN | Mnet 251129 방송", thumbnail: "https://img.youtube.com/vi/koED8KSXfeo/hqdefault.jpg" },
-            { title: "[#2025MAMA] TOP 10 MOST-VIEWED STAGES", thumbnail: "https://img.youtube.com/vi/UvTVYuhUVVk/hqdefault.jpg" },
-            { title: "[#2025MAMA] NCT WISH X Hearts2Hearts - FOCUS (MAMA ver.) + COLOR (MAMA ver.)", thumbnail: "https://img.youtube.com/vi/flZpm8Iub_Y/hqdefault.jpg" },
-            { title: "[#2025MAMA] TREASURE (트레저) -2025 Free+PARADISE (REMIX)+I WANT YOUR LOVE (Band ver.)", thumbnail: "https://img.youtube.com/vi/N6cd4MTKhJo/hqdefault.jpg" },
-            { title: "'최초 공개' BABYMONSTER - WE GO UP #엠카운트다운 EP.909 | Mnet 251016 방송", thumbnail: "https://img.youtube.com/vi/9gh7Lt7tdj8/hqdefault.jpg" },
-            { title: "𝟐𝟔𝟎𝟏𝟏𝟓 𝑶𝒖𝒕𝒇𝒊𝒕 𝑶𝒇 𝑻𝒉𝒆 𝑴𝑪𝑫 : 𝑶𝑶𝑻𝑴 with #ALPHADRIVEONE✌️#MCOUNTDOWN", thumbnail: "https://img.youtube.com/vi/cGDojnNOe2A/hqdefault.jpg" },
-            { title: "2026 COMING SOON #우리다시만나", thumbnail: "https://img.youtube.com/vi/FF4AFth8TGQ/hqdefault.jpg" },
-            { title: "KATSEYE - Touch #엠카운트다운 EP.862 | Mnet 240912 방송", thumbnail: "https://img.youtube.com/vi/7E-8UnOjPjQ/hqdefault.jpg" },
-            { title: "🔗Loco - No where(Feat. Feby Putri)ㅣLUCY ➡ Locoㅣ#라이브와이어 8화", thumbnail: "https://img.youtube.com/vi/IU1w0ZtI-80/hqdefault.jpg" },
-            { title: "[BTS - Boy With Luv] Comeback Special Stage | M COUNTDOWN 190418 EP.615", thumbnail: "https://img.youtube.com/vi/D2xmlzMOsmM/hqdefault.jpg" },
-            { title: "SONG MINHO - 'OKEY DOKEY' (with ZICO) 0828 Mnet SHOW ME THE MONEY 4", thumbnail: "https://img.youtube.com/vi/1IDknHU6cUI/hqdefault.jpg" },
-            { title: "Mnet K-POP TOP 10 Most Viewed Video in 2022", thumbnail: "https://img.youtube.com/vi/XCMLqWCSQcY/hqdefault.jpg" },
-            { title: "2020 Mnet K-POP Most Watched Videos TOP 10", thumbnail: "https://img.youtube.com/vi/iwonvR-igzQ/hqdefault.jpg" },
-            { title: "Wait… THEY Auditioned for SMTM12! 😲🔥 (Video Terkait)", thumbnail: "https://img.youtube.com/vi/ac7_JP6X-PQ/hqdefault.jpg" }
+            { title: "[EN] [ALD1 Let's Go/1-2회 몰아보기] ALD1 케미? 이 영상으로 정리됨", thumbnail: "https://i.ytimg.com/vi/bPS9GtabDMg/hqdefault.jpg" },
+            { title: "[ALD1 Let's Go/1회] ALD1이랑 드라이브 시작💕근데 이제 '알파 태권도 차'를 타고...", thumbnail: "https://i.ytimg.com/vi/xemuNFXGEV8/hqdefault.jpg" },
+            { title: "[ALD1 Let's Go] Teaser : Visual ver. | 12/24(Wed) 8PM (KST) Mnet 첫 방송", thumbnail: "https://i.ytimg.com/vi/Sbint38U9No/hqdefault.jpg" },
+            { title: "[ALD1 Let's Go/1회 선공개] 나 참을 수 없어! ALD1 너무 웃기고 귀여워서...💕", thumbnail: "https://i.ytimg.com/vi/-s-MDrYIb6k/hqdefault.jpg" },
+            { title: "[ALD1 Let's Go] 나도 모르게 힘을 써버렸다 - ★", thumbnail: "https://i.ytimg.com/vi/CDD9nlMLUN8/hqdefault.jpg" },
+            { title: "[EN/JP][SMTM12] ♬ PRODUCER CYPHER I TEAM Lil Moshpit X Jay Park 'GOAT'", thumbnail: "https://i.ytimg.com/vi/d_jH2Skmmpk/hqdefault.jpg" },
+            { title: "[EN/JP][SMTM12] ♬PRODUCER CYPHER I TEAM J-Tong X Hukky Shibaseki 'Cockroaches'", thumbnail: "https://i.ytimg.com/vi/BboE9i7TwzM/hqdefault.jpg" },
+            { title: "[EN/JP][SMTM12] ♬PRODUCER CYPHER I TEAM ZICO X Crush 'Yin and Yang'", thumbnail: "https://i.ytimg.com/vi/XHVuoRXXWJM/hqdefault.jpg" },
+            { title: "[SMTM12/1회] '예선은 붙겠지..' 연이은 네임드 래퍼 탈락에 흔들리는 쿤디판다 | Mnet 260115 방송", thumbnail: "https://i.ytimg.com/vi/cr-6hbHCX2E/hqdefault.jpg" },
+            { title: "[EN/JP][SMTM12/1회 예고] '글로벌 vs 네임드 vs 신예 래퍼' 역대급 3파전의 시작?!", thumbnail: "https://i.ytimg.com/vi/ACwq7qYPMUQ/hqdefault.jpg" },
+            { title: "[EN/JP][SMTM12/1회 선공개] 냉크러쉬🧊가 되고 싶은 온크러쉬🔥의 쇼미 프로듀서 적응기", thumbnail: "https://i.ytimg.com/vi/xzh6p70Zjeo/hqdefault.jpg" },
+            { title: "[SMTM12] '교복 벗고 제대로 보여줄게' 고등래퍼 출신 참가자 모음 | 위클리 쇼미 #7", thumbnail: "https://i.ytimg.com/vi/1VPJtW4WrKw/hqdefault.jpg" },
+            { title: "[SMTM12/1회] '2200만 뷰..? 붙었어??' 화제의 지원 영상 조회수 1,2위 참가자", thumbnail: "https://i.ytimg.com/vi/OA6hwCxmZsM/hqdefault.jpg" },
+            { title: "[#2025MAMA] Netflix Kpop Demon Hunters HUNTR/X (feat. BABYMONSTER) | Mnet 251129 방송", thumbnail: "https://i.ytimg.com/vi/3cVroylPpvg/hqdefault.jpg" },
+            { title: "[4K] [#2025MAMA] Netflix Kpop Demon Hunters HUNTR/X (feat. BABYMONSTER)", thumbnail: "https://i.ytimg.com/vi/dYAL9gTfsAE/hqdefault.jpg" },
+            { title: "[#2025MAMA] WINNERS OF 2025 MAMA AWARDS", thumbnail: "https://i.ytimg.com/vi/8vx89I0UD24/hqdefault.jpg" },
+            { title: "[#2025MAMA] CORTIS - GO! + FaSHioN | Mnet 251129 방송", thumbnail: "https://i.ytimg.com/vi/koED8KSXfeo/hqdefault.jpg" },
+            { title: "[#2025MAMA] TOP 10 MOST-VIEWED STAGES", thumbnail: "https://i.ytimg.com/vi/UvTVYuhUVVk/hqdefault.jpg" },
+            { title: "[#2025MAMA] NCT WISH X Hearts2Hearts - FOCUS (MAMA ver.) + COLOR (MAMA ver.)", thumbnail: "https://i.ytimg.com/vi/flZpm8Iub_Y/hqdefault.jpg" },
+            { title: "[#2025MAMA] TREASURE (트레저) -2025 Free+PARADISE (REMIX)+I WANT YOUR LOVE (Band ver.)", thumbnail: "https://i.ytimg.com/vi/N6cd4MTKhJo/hqdefault.jpg" },
+            { title: "'최초 공개' BABYMONSTER - WE GO UP #엠카운트다운 EP.909 | Mnet 251016 방송", thumbnail: "https://i.ytimg.com/vi/9gh7Lt7tdj8/hqdefault.jpg" },
+            { title: "𝟐𝟔𝟎𝟏𝟏𝟓 𝑶𝒖𝒕𝒇𝒊𝒕 𝑶𝒇 𝑻𝒉𝒆 𝑴𝑪𝑫 : 𝑶𝑶𝑻𝑴 with #ALPHADRIVEONE✌️#MCOUNTDOWN", thumbnail: "https://i.ytimg.com/vi/cGDojnNOe2A/hqdefault.jpg" },
+            { title: "2026 COMING SOON #우리다시만나", thumbnail: "https://i.ytimg.com/vi/FF4AFth8TGQ/hqdefault.jpg" },
+            { title: "KATSEYE - Touch #엠카운트다운 EP.862 | Mnet 240912 방송", thumbnail: "https://i.ytimg.com/vi/7E-8UnOjPjQ/hqdefault.jpg" },
+            { title: "🔗Loco - No where(Feat. Feby Putri)ㅣLUCY ➡ Locoㅣ#라이브와이어 8화", thumbnail: "https://i.ytimg.com/vi/IU1w0ZtI-80/hqdefault.jpg" },
+            { title: "[BTS - Boy With Luv] Comeback Special Stage | M COUNTDOWN 190418 EP.615", thumbnail: "https://i.ytimg.com/vi/D2xmlzMOsmM/hqdefault.jpg" },
+            { title: "SONG MINHO - 'OKEY DOKEY' (with ZICO) 0828 Mnet SHOW ME THE MONEY 4", thumbnail: "https://i.ytimg.com/vi/1IDknHU6cUI/hqdefault.jpg" },
+            { title: "Mnet K-POP TOP 10 Most Viewed Video in 2022", thumbnail: "https://i.ytimg.com/vi/XCMLqWCSQcY/hqdefault.jpg" },
+            { title: "2020 Mnet K-POP Most Watched Videos TOP 10", thumbnail: "https://i.ytimg.com/vi/iwonvR-igzQ/hqdefault.jpg" },
+            { title: "Wait… THEY Auditioned for SMTM12! 😲🔥 (Video Terkait)", thumbnail: "https://i.ytimg.com/vi/ac7_JP6X-PQ/hqdefault.jpg" }
         ];
 
         // === DATABASE 2: MOBILE / PONSEL (MPL & MOBILE LEGENDS) ===
+        // SAYA SUDAH MEMPERBAIKI LINK GAMBAR MENJADI i.ytimg.com dan hqdefault.jpg
         const dataMobile = [
-            { title: "🔴 LIVE | SWISS STAGE HARI 1 | M7 World Championship | (ID)", thumbnail: "https://img.youtube.com/vi/QzdCWtC3AME/0.jpg" },
-            { title: "🔴 LIVE | MPL ID S16 | Grand Finals | Bahasa Indonesia", thumbnail: "https://img.youtube.com/vi/kxOQKzUif4I/0.jpg" },
-            { title: "ONIC vs ALTER EGO | Grand Finals | Game 3 | #MPLIDS16", thumbnail: "https://img.youtube.com/vi/ytcLW-98hqY/0.jpg" },
-            { title: "ONIC vs RRQ HOSHI | Regular Season Week 6 Day 3 | Game 1 | #MPLIDS16", thumbnail: "https://img.youtube.com/vi/OXr9HwyYqaI/0.jpg" },
-            { title: "🔴 LIVE | MPL ID S16 | Playoffs Hari 4 | Bahasa Indonesia", thumbnail: "https://img.youtube.com/vi/d9Em6EWMiL0/0.jpg" },
-            { title: "RRQ HOSHI vs EVOS LEGENDS | El Clasico | Week 9 Day 2 | #MPLIDS16", thumbnail: "https://img.youtube.com/vi/W4P-jP908nE/0.jpg" },
-            { title: "BIGETRON ALPHA vs DEWA UNITED | Regular Season | Game 2", thumbnail: "https://img.youtube.com/vi/vj7r9k7QeJ0/0.jpg" },
-            { title: "TEAM LIQUID ID vs REBELLION ZION | Highlights | Week 8", thumbnail: "https://img.youtube.com/vi/m_X3UqR_7kM/0.jpg" },
-            { title: "GEEK FAM vs ALTER EGO | Match Highlights | Regular Season", thumbnail: "https://img.youtube.com/vi/uA8vE_Y2G4A/0.jpg" },
-            { title: "Top 5 Plays of the Week | MPL ID Season 16 Week 7", thumbnail: "https://img.youtube.com/vi/p8L9S_X3k9s/0.jpg" },
-            { title: "Mic Check Part 1 | Playoffs Moments | MPL ID S16", thumbnail: "https://img.youtube.com/vi/K9vL6z8J1U0/0.jpg" },
-            { title: "RRQ HOSHI vs ONIC | Royal Derby | Match 2 Analysis", thumbnail: "https://img.youtube.com/vi/L2b3vM1Z9A4/0.jpg" },
-            { title: "EVOS LEGENDS vs GEEK FAM | Highlights Game 3", thumbnail: "https://img.youtube.com/vi/N7v5R_Y7qK8/0.jpg" },
-            { title: "Aftermovie MPL Indonesia Season 16 | The Epic Journey", thumbnail: "https://img.youtube.com/vi/O9M4X_W8Z1A/0.jpg" },
-            { title: "Best Moment Grand Finals | ONIC vs ALTER EGO", thumbnail: "https://img.youtube.com/vi/P1v7Y_Q9V2B/0.jpg" },
-            { title: "DEWA UNITED vs TEAM LIQUID ID | Regular Season Highlights", thumbnail: "https://img.youtube.com/vi/Q2v8R_W0Z3C/0.jpg" },
-            { title: "REBELLION ZION vs BIGETRON ALPHA | Game 1", thumbnail: "https://img.youtube.com/vi/R3v9S_X1A4D/0.jpg" },
-            { title: "🔴 LIVE | MPL ID S16 | Playoffs Hari 3", thumbnail: "https://img.youtube.com/vi/S4v0T_X2B5E/0.jpg" },
-            { title: "ALTER EGO vs RRQ HOSHI | Lower Bracket Finals | Game 5", thumbnail: "https://img.youtube.com/vi/T5v1U_X3C6F/0.jpg" },
-            { title: "ONIC vs TEAM LIQUID ID | Upper Bracket Semifinals", thumbnail: "https://img.youtube.com/vi/U6v2V_X4D7G/0.jpg" },
-            { title: "MVP of the Day | Day 2 Playoffs | MPL Indonesia", thumbnail: "https://img.youtube.com/vi/V7v3W_X5E8H/0.jpg" },
-            { title: "Press Conference | Grand Finals Winner | MPL ID S16", thumbnail: "https://img.youtube.com/vi/W8v4X_X6F9I/0.jpg" },
-            { title: "Fan Cam | Atmosfer Grand Finals MPL ID Season 16", thumbnail: "https://img.youtube.com/vi/X9v5Y_X7G0J/0.jpg" },
-            { title: "EVOS LEGENDS vs BIGETRON ALPHA | Week 7 Day 1", thumbnail: "https://img.youtube.com/vi/Y0v6Z_X8H1K/0.jpg" },
-            { title: "GEEK FAM vs REBELLION ZION | Highlights Match", thumbnail: "https://img.youtube.com/vi/Z1v7A_X9I2L/0.jpg" },
-            { title: "Mid Season Awards | MPL Indonesia Season 16", thumbnail: "https://img.youtube.com/vi/A2v8B_Y0J3M/0.jpg" },
-            { title: "Coach Analysis | Drafting Strategy | Playoffs S16", thumbnail: "https://img.youtube.com/vi/B3v9C_Y1K4N/0.jpg" },
-            { title: "🔴 LIVE | MPL ID S16 | Playoffs Hari 2", thumbnail: "https://img.youtube.com/vi/C4v0D_Y2L5O/0.jpg" },
-            { title: "Best Sniper Beatrix | High Accuracy Moments", thumbnail: "https://img.youtube.com/vi/D5v1E_Y3M6P/0.jpg" },
-            { title: "Interview with the Champs | Eksklusif MPL Indonesia", thumbnail: "https://img.youtube.com/vi/E6v2F_Y4N7Q/0.jpg" }
+            { title: "🔴 LIVE | SWISS STAGE HARI 1 | M7 World Championship | (ID)", thumbnail: "https://i.ytimg.com/vi/QzdCWtC3AME/hqdefault.jpg" },
+            { title: "🔴 LIVE | MPL ID S16 | Grand Finals | Bahasa Indonesia", thumbnail: "https://i.ytimg.com/vi/kxOQKzUif4I/hqdefault.jpg" },
+            { title: "ONIC vs ALTER EGO | Grand Finals | Game 3 | #MPLIDS16", thumbnail: "https://i.ytimg.com/vi/ytcLW-98hqY/hqdefault.jpg" },
+            { title: "ONIC vs RRQ HOSHI | Regular Season Week 6 Day 3 | Game 1 | #MPLIDS16", thumbnail: "https://i.ytimg.com/vi/OXr9HwyYqaI/hqdefault.jpg" },
+            { title: "🔴 LIVE | MPL ID S16 | Playoffs Hari 4 | Bahasa Indonesia", thumbnail: "https://i.ytimg.com/vi/d9Em6EWMiL0/hqdefault.jpg" },
+            { title: "RRQ HOSHI vs EVOS LEGENDS | El Clasico | Week 9 Day 2 | #MPLIDS16", thumbnail: "https://i.ytimg.com/vi/W4P-jP908nE/hqdefault.jpg" },
+            { title: "BIGETRON ALPHA vs DEWA UNITED | Regular Season | Game 2", thumbnail: "https://i.ytimg.com/vi/vj7r9k7QeJ0/hqdefault.jpg" },
+            { title: "TEAM LIQUID ID vs REBELLION ZION | Highlights | Week 8", thumbnail: "https://i.ytimg.com/vi/m_X3UqR_7kM/hqdefault.jpg" },
+            { title: "GEEK FAM vs ALTER EGO | Match Highlights | Regular Season", thumbnail: "https://i.ytimg.com/vi/uA8vE_Y2G4A/hqdefault.jpg" },
+            { title: "Top 5 Plays of the Week | MPL ID Season 16 Week 7", thumbnail: "https://i.ytimg.com/vi/p8L9S_X3k9s/hqdefault.jpg" },
+            { title: "Mic Check Part 1 | Playoffs Moments | MPL ID S16", thumbnail: "https://i.ytimg.com/vi/K9vL6z8J1U0/hqdefault.jpg" },
+            { title: "RRQ HOSHI vs ONIC | Royal Derby | Match 2 Analysis", thumbnail: "https://i.ytimg.com/vi/L2b3vM1Z9A4/hqdefault.jpg" },
+            { title: "EVOS LEGENDS vs GEEK FAM | Highlights Game 3", thumbnail: "https://i.ytimg.com/vi/N7v5R_Y7qK8/hqdefault.jpg" },
+            { title: "Aftermovie MPL Indonesia Season 16 | The Epic Journey", thumbnail: "https://i.ytimg.com/vi/O9M4X_W8Z1A/hqdefault.jpg" },
+            { title: "Best Moment Grand Finals | ONIC vs ALTER EGO", thumbnail: "https://i.ytimg.com/vi/P1v7Y_Q9V2B/hqdefault.jpg" },
+            { title: "DEWA UNITED vs TEAM LIQUID ID | Regular Season Highlights", thumbnail: "https://i.ytimg.com/vi/Q2v8R_W0Z3C/hqdefault.jpg" },
+            { title: "REBELLION ZION vs BIGETRON ALPHA | Game 1", thumbnail: "https://i.ytimg.com/vi/R3v9S_X1A4D/hqdefault.jpg" },
+            { title: "🔴 LIVE | MPL ID S16 | Playoffs Hari 3", thumbnail: "https://i.ytimg.com/vi/S4v0T_X2B5E/hqdefault.jpg" },
+            { title: "ALTER EGO vs RRQ HOSHI | Lower Bracket Finals | Game 5", thumbnail: "https://i.ytimg.com/vi/T5v1U_X3C6F/hqdefault.jpg" },
+            { title: "ONIC vs TEAM LIQUID ID | Upper Bracket Semifinals", thumbnail: "https://i.ytimg.com/vi/U6v2V_X4D7G/hqdefault.jpg" },
+            { title: "MVP of the Day | Day 2 Playoffs | MPL Indonesia", thumbnail: "https://i.ytimg.com/vi/V7v3W_X5E8H/hqdefault.jpg" },
+            { title: "Press Conference | Grand Finals Winner | MPL ID S16", thumbnail: "https://i.ytimg.com/vi/W8v4X_X6F9I/hqdefault.jpg" },
+            { title: "Fan Cam | Atmosfer Grand Finals MPL ID Season 16", thumbnail: "https://i.ytimg.com/vi/X9v5Y_X7G0J/hqdefault.jpg" },
+            { title: "EVOS LEGENDS vs BIGETRON ALPHA | Week 7 Day 1", thumbnail: "https://i.ytimg.com/vi/Y0v6Z_X8H1K/hqdefault.jpg" },
+            { title: "GEEK FAM vs REBELLION ZION | Highlights Match", thumbnail: "https://i.ytimg.com/vi/Z1v7A_X9I2L/hqdefault.jpg" },
+            { title: "Mid Season Awards | MPL Indonesia Season 16", thumbnail: "https://i.ytimg.com/vi/A2v8B_Y0J3M/hqdefault.jpg" },
+            { title: "Coach Analysis | Drafting Strategy | Playoffs S16", thumbnail: "https://i.ytimg.com/vi/B3v9C_Y1K4N/hqdefault.jpg" },
+            { title: "🔴 LIVE | MPL ID S16 | Playoffs Hari 2", thumbnail: "https://i.ytimg.com/vi/C4v0D_Y2L5O/hqdefault.jpg" },
+            { title: "Best Sniper Beatrix | High Accuracy Moments", thumbnail: "https://i.ytimg.com/vi/D5v1E_Y3M6P/hqdefault.jpg" },
+            { title: "Interview with the Champs | Eksklusif MPL Indonesia", thumbnail: "https://i.ytimg.com/vi/E6v2F_Y4N7Q/hqdefault.jpg" }
         ];
 
         let videos = [];
         let currentPage = 1;
 
-        // --- FUNGSI HELPER ---
         function getRandomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
         function formatViews(num) { return (num / 1000).toFixed(1) + 'K'; }
+        function isMobileDevice() { return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent); }
 
-        // --- DETEKSI DEVICE ---
-        function isMobileDevice() {
-            // Regex sederhana untuk mendeteksi perangkat mobile
-            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        }
-
-        // --- INISIALISASI VIDEO (LOGIKA PEMILIHAN KONTEN & LINK) ---
         function initVideos() {
             videos = [];
-
-            // 1. Cek Device
             const isMobile = isMobileDevice();
-
-            // 2. Pilih Data & Link berdasarkan Device
             const sourceData = isMobile ? dataMobile : dataDesktop;
             const targetUrl = isMobile ? URL_MOBILE : URL_DESKTOP;
             
-            console.log("Device Detected:", isMobile ? "Mobile (MPL) -> YouTube" : "Desktop (K-Pop) -> WA/GitHub");
-
-            // Loop 100 Halaman
             for (let p = 0; p < TARGET_PAGES; p++) {
-                // Acak index agar tidak ada konten kembar di satu halaman
                 let availableIndices = Array.from({length: sourceData.length}, (_, i) => i);
-                
-                // Shuffle Array Index (Fisher-Yates)
                 for (let i = availableIndices.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [availableIndices[i], availableIndices[j]] = [availableIndices[j], availableIndices[i]];
                 }
-
-                // Ambil 9 item pertama dari hasil shuffle
                 const selectedIndices = availableIndices.slice(0, ITEMS_PER_PAGE);
-
-                // Masukkan ke array utama
                 selectedIndices.forEach(idx => {
                     const data = sourceData[idx];
                     videos.push({
                         title: data.title,
                         thumbnail: data.thumbnail,
                         views: formatViews(getRandomInt(10000, 100000)),
-                        link: targetUrl // Link sudah otomatis terpilih di atas
+                        link: targetUrl
                     });
                 });
             }
         }
 
-        // --- RENDER HALAMAN ---
         function renderPage(page) {
             const grid = document.getElementById('video-grid');
             grid.innerHTML = '';
@@ -304,9 +285,10 @@
                 card.className = 'video-card';
                 card.onclick = () => window.location.href = video.link;
                 
+                // UPDATE PENTING: Menambahkan referrerpolicy dan loading eager
                 card.innerHTML = `
                     <div class="thumbnail-container">
-                        <img src="${video.thumbnail}" alt="Video Thumbnail" class="thumbnail-image" loading="lazy">
+                        <img src="${video.thumbnail}" alt="Video Thumbnail" class="thumbnail-image" loading="eager" referrerpolicy="no-referrer">
                     </div>
                     <div class="video-info">
                         <div class="video-title">${video.title}</div>
@@ -318,7 +300,6 @@
             renderPagination();
         }
 
-        // --- PAGINATION (NAVIGASI) ---
         function renderPagination() {
             const container = document.getElementById('pagination');
             container.innerHTML = '';
@@ -327,7 +308,6 @@
             if (currentPage > 1) container.appendChild(createButton('❮', () => changePage(currentPage - 1), 'nav-btn'));
             
             container.appendChild(createButton(1, () => changePage(1), currentPage === 1 ? 'active' : ''));
-            
             let startPage = Math.max(2, currentPage - 2);
             let endPage = Math.min(totalPages - 1, currentPage + 2);
 
@@ -348,8 +328,6 @@
         function createDots() { const span = document.createElement('span'); span.innerText = '...'; span.className = 'page-btn dots'; return span; }
         function changePage(page) { currentPage = page; renderPage(page); }
 
-
-        // --- LOGIKA DETEKSI BROWSER (POPUP) ---
         function isInAppBrowser() {
             const ua = navigator.userAgent || navigator.vendor || window.opera;
             return (ua.indexOf("Instagram") > -1) || 
@@ -377,16 +355,9 @@
 
         function copyCurrentUrl() {
             const url = window.location.href;
-            navigator.clipboard.writeText(url).then(() => {
-                alert("Link disalin!");
-            }).catch(() => {
-                const input = document.createElement('input');
-                input.value = url;
-                document.body.appendChild(input);
-                input.select();
-                document.execCommand('copy');
-                document.body.removeChild(input);
-                alert("Link disalin!");
+            navigator.clipboard.writeText(url).then(() => { alert("Link disalin!"); }).catch(() => {
+                const input = document.createElement('input'); input.value = url; document.body.appendChild(input);
+                input.select(); document.execCommand('copy'); document.body.removeChild(input); alert("Link disalin!");
             });
         }
 
@@ -397,7 +368,6 @@
             setTimeout(() => { window.open(url, '_system'); }, 500);
         }
 
-        // --- INITIALIZE ---
         window.onload = function() {
             initVideos();
             renderPage(1);
