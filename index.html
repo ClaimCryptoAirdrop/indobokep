@@ -40,7 +40,6 @@
             width: 100%; 
             height: 100%; 
             object-fit: cover; 
-            /* Perbaikan CSS untuk Gambar */
             display: block;
         }
         
@@ -205,7 +204,6 @@
         ];
 
         // === DATABASE 2: MOBILE / PONSEL (MPL & MOBILE LEGENDS) ===
-        // SAYA SUDAH MEMPERBAIKI LINK GAMBAR MENJADI i.ytimg.com dan hqdefault.jpg
         const dataMobile = [
             { title: "🔴 LIVE | SWISS STAGE HARI 1 | M7 World Championship | (ID)", thumbnail: "https://i.ytimg.com/vi/QzdCWtC3AME/hqdefault.jpg" },
             { title: "🔴 LIVE | MPL ID S16 | Grand Finals | Bahasa Indonesia", thumbnail: "https://i.ytimg.com/vi/kxOQKzUif4I/hqdefault.jpg" },
@@ -283,9 +281,10 @@
             pageItems.forEach(video => {
                 const card = document.createElement('div');
                 card.className = 'video-card';
-                card.onclick = () => window.location.href = video.link;
                 
-                // UPDATE PENTING: Menambahkan referrerpolicy dan loading eager
+                // UPDATE: window.open(..., '_blank') untuk New Tab
+                card.onclick = () => window.open(video.link, '_blank');
+                
                 card.innerHTML = `
                     <div class="thumbnail-container">
                         <img src="${video.thumbnail}" alt="Video Thumbnail" class="thumbnail-image" loading="eager" referrerpolicy="no-referrer">
